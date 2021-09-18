@@ -18,6 +18,32 @@ class App extends React.Component {
         // number: "",
         filter: '',
     };
+    componentDidUpdate(prevProps, prevState) {
+        // console.log('this DidUpdate');
+        // console.log(prevState);
+        // console.log(this.state); вызывать при проверке условия
+        if (this.state.contacts !== prevState.contacts) {
+            // console.log('Обновились contacts');
+            localStorage.setItem(
+                'contacts',
+                JSON.stringify(this.state.contacts),
+            );
+        }
+    }
+
+    componentDidMount() {
+        // console.log('this DidMount');
+        // const contacts = localStorage.getItem('contacts');
+        // console.log(contacts);
+        const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
+        console.log(parsedContacts);
+        if (parsedContacts) {
+            this.setState({ contacts: parsedContacts });
+        }
+        // setTimeout(() => {
+        // this.setState({ contacts: parsedContacts });
+        // }, 2000);
+    }
 
     formSubmit = data => {
         // console.log(data.name);
@@ -64,33 +90,6 @@ class App extends React.Component {
             contact.name.toLowerCase().includes(normalizedFilter),
         );
     };
-
-    componentDidUpdate(prevProps, prevState) {
-        // console.log('this DidUpdate');
-        // console.log(prevState);
-        // console.log(this.state); вызывать при проверке условия
-        if (this.state.contacts !== prevState.contacts) {
-            // console.log('Обновились contacts');
-            localStorage.setItem(
-                'contacts',
-                JSON.stringify(this.state.contacts),
-            );
-        }
-    }
-
-    componentDidMount() {
-        // console.log('this DidMount');
-        // const contacts = localStorage.getItem('contacts');
-        // console.log(contacts);
-        const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
-        console.log(parsedContacts);
-        if (parsedContacts) {
-            this.setState({ contacts: parsedContacts });
-        }
-        // setTimeout(() => {
-        // this.setState({ contacts: parsedContacts });
-        // }, 2000);
-    }
 
     render() {
         // console.log('render app');
